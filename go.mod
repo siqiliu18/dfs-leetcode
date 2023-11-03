@@ -1,4 +1,4 @@
-module dfs_leetcode79
+module dfs_leetcode
 
 go 1.20
 

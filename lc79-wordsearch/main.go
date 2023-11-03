@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	existfun "dfs_leetcode79/dfs"
+	"dfs_leetcode/lc79-wordsearch/dfs"
 )
 
 /*
@@ -44,6 +44,6 @@ func main() {
 		{byte('S'), byte('F'), byte('C'), byte('S')},
 		{byte('A'), byte('D'), byte('E'), byte('E')},
 	}
-	res := existfun.Exist(printBoard, "")
+	res := dfs.Exist(printBoard, "SEE")
 	fmt.Println(res)
 }
