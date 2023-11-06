@@ -1,4 +1,4 @@
-# dfs-leetcode
+# go-leetcode-dfs
 
 ### Sources about time and space complexity:
 1. https://reintech.io/blog/mastering-space-complexity-analysis-in-go
