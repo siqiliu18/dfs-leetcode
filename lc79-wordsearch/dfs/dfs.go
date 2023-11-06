@@ -5,6 +5,16 @@ type Node struct {
 	y int
 }
 
+/*
+	Time and Space complexity:
+	1. https://www.youtube.com/watch?v=z8pSRwYJxyk
+	2. https://youtu.be/DRFJeCW4qiM?t=771
+
+	Time Complexity is O(row*col*4^L) where L is the len of the string. 4 because every box has 4 demansions (actuall 3 exclue the box moved from)
+
+	Space complexity should be O(row*col) for stacking (recurrsion). Plus a map that is allocated from heap which is also O(row*col)
+*/
+
 func DFS(board [][]byte, node Node, word string, index int, visited map[Node]int, rowLen int, colLen int) bool {
 	// if current node == letter, extend to max 4 directions
 	// if current node != letter, return false
