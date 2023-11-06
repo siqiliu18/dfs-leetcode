@@ -31,6 +31,8 @@ func RightSideView(root *utils.TreeNode) []int {
 	return res
 }
 
+// I am traversing all nodes, so the big O should just be O(n)
+// https://stackoverflow.com/questions/4547012/complexities-of-binary-tree-traversals
 func levelTraversal(store *[][]int, root *utils.TreeNode, level int) {
 	if root == nil {
 		return
