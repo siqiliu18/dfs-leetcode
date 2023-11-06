@@ -9,7 +9,7 @@ func rightSideView(root *utils.TreeNode) []int {
 		return []int{}
 	}
 
-	levelTraversal(store, root, 0)
+	levelTraversal(store, root, 1)
 
 	res := []int{}
 	for i := 0; i < len(*store); i++ {
@@ -25,11 +25,10 @@ func levelTraversal(store *[][]int, root *utils.TreeNode, level int) {
 		return
 	}
 
-	if (*store)[level] == nil {
-		(*store)[level] = make([]int, 0)
-		(*store)[level] = append((*store)[level], root.Val)
+	if (*store) == nil || len(*store) < level {
+		*store = append(*store, []int{root.Val}) // new level, no need to append, directly add new array with val in it.
 	} else {
-		(*store)[level] = append((*store)[level], root.Val)
+		(*store)[level-1] = append((*store)[level-1], root.Val)
 	}
 
 	levelTraversal(store, root.Left, level+1)
