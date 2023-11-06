@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"dfs_leetcode/utils"
+	"fmt"
+
+	dfs "dfs_leetcode/lc199-btrightsideview/levelPrint"
+)
 
 func main() {
-	fmt.Println("yes")
+	input := "[1,2,3,4]"
+	root := utils.BuildTreeFromStringArray(input)
+	res := dfs.RightSideView(root)
+	fmt.Println(res)
 }

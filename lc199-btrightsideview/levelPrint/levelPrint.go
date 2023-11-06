@@ -2,7 +2,18 @@ package levelPrint
 
 import "dfs_leetcode/utils"
 
-func rightSideView(root *utils.TreeNode) []int {
+func RightSideView(root *utils.TreeNode) []int {
+	// this article talks about diff of new and make https://stackoverflow.com/questions/9320862/why-would-i-make-or-new
+	/*	Quote:
+
+		*The reason is that slice, map and chan are data structures. They need to be initialized, otherwise they won't be usable.
+
+		* new(T) - Allocates memory, and sets it to the zero value for type T....that is 0 for int, "" for string and nil for referenced types (slice, map, chan)
+			Note that referenced types are just pointers to some underlying data structures, which won't be created by new(T)
+			Example: in case of slice, the underlying array won't be created, thus new([]int) returns a pointer to nothing
+
+		* make(T) - Allocates memory for referenced data types (slice, map, chan), plus initializes their underlying data structures
+	*/
 	store := new([][]int)
 
 	if root == nil {

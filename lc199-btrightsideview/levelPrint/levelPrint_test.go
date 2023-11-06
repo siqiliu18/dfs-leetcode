@@ -11,7 +11,7 @@ func TestRightSideView(t *testing.T) {
 	Convey("1", t, func() {
 		input := "[1,2,3,4]"
 		root := utils.BuildTreeFromStringArray(input)
-		res := rightSideView(root)
+		res := RightSideView(root)
 		So(res, ShouldResemble, []int{1, 3, 4})
 	})
 }
