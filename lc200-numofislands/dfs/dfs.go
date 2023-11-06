@@ -1,5 +1,14 @@
 package dfs
 
+// time complexity is O(n*m)
+/*
+	Space complexity should be O(n*m) as well ideally but I allocate extra memory from the heap for checking if nodes being visited.
+	So it would be O(n*m) + O(n*m) = O(n*m)
+
+	Sources:
+	1. https://reintech.io/blog/mastering-space-complexity-analysis-in-go
+	2. https://medium.com/@jeelrupapara/day-1-data-structure-and-algorithms-time-and-space-complexity-with-golang-a380d5914cc9
+*/
 func DFS(x int, y int, rowLen int, colLen int, grid [][]byte, visited [][]bool) {
 
 	// left
