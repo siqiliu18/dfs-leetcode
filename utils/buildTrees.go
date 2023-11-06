@@ -15,7 +15,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func BuildTreeFromStringArray(strArr string) string {
+func BuildTreeFromStringArray(strArr string) *TreeNode {
 	withoutBlackets := strings.Trim(strArr, "[]")
 	arrOfStr := strings.Split(withoutBlackets, ",")
 	fmt.Println(arrOfStr)
@@ -33,8 +33,12 @@ func BuildTreeFromStringArray(strArr string) string {
 	}
 
 	printPreOrder(root)
+	fmt.Println()
+	printPostOrder(root)
+	fmt.Println()
+	printInOrder(root)
 
-	return withoutBlackets
+	return root
 }
 
 func dfs(arrOfStr []string, index int, diff int, root *TreeNode) {
@@ -75,5 +79,25 @@ func printPreOrder(root *TreeNode) {
 		fmt.Printf("%d ", root.Val)
 		printPreOrder(root.Left)
 		printPreOrder(root.Right)
+	}
+}
+
+func printPostOrder(root *TreeNode) {
+	if root == nil {
+		return
+	} else {
+		printPostOrder(root.Left)
+		printPostOrder(root.Right)
+		fmt.Printf("%d ", root.Val)
+	}
+}
+
+func printInOrder(root *TreeNode) {
+	if root == nil {
+		return
+	} else {
+		printInOrder(root.Left)
+		fmt.Printf("%d ", root.Val)
+		printInOrder(root.Right)
 	}
 }

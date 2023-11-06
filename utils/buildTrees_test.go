@@ -12,6 +12,8 @@ func TestBuildTreeFromStringArray(t *testing.T) {
 
 		res := BuildTreeFromStringArray(input)
 
-		So(res, ShouldEqual, "1,2,3,null,5,null,4")
+		So(res.Left.Val, ShouldEqual, 2)
+		So(res.Left.Left, ShouldBeNil)
+		So(res.Right.Right.Val, ShouldEqual, 4)
 	})
 }
