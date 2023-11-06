@@ -42,6 +42,7 @@ func NumIslands(grid [][]byte) int {
 	rowLen := len(grid)
 	colLen := len(grid[0])
 
+	// code example without allocating extra memory https://medium.com/@haroon.siddiqui025/leetcode-q200-number-of-islands-medium-1957593096da
 	visited := make([][]bool, rowLen)
 
 	for i := 0; i < rowLen; i++ {
