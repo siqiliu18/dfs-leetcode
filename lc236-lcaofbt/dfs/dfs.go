@@ -17,6 +17,14 @@ func LowestCommonAncestor(root, p, q *utils.TreeNode) *utils.TreeNode {
 		return root
 	}
 
+	if root.Val == p.Val && found(root.Right, q) {
+		return root
+	}
+
+	if found(root.Left, p) && root.Val == q.Val {
+		return root
+	}
+
 	leftRes := LowestCommonAncestor(root.Left, p, q)
 	if leftRes != nil {
 		return leftRes
