@@ -9,6 +9,10 @@ case 3: if q found on the left and root = q, return q or root
 */
 
 func LowestCommonAncestor(root, p, q *utils.TreeNode) *utils.TreeNode {
+	if root == nil {
+		return nil
+	}
+
 	if found(root.Left, p) && found(root.Right, q) {
 		return root
 	}
