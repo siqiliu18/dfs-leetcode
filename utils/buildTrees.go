@@ -57,7 +57,7 @@ func dfs(arrOfStr []string, index int, diff int, root *TreeNode) {
 		root.Left = &TreeNode{
 			Val: int(num),
 		}
-		dfs(arrOfStr, leftChildIndex, diff+1, root.Left)
+		dfs(arrOfStr, leftChildIndex, leftChildIndex+1, root.Left)
 	}
 
 	if rightChildIndex < len(arrOfStr) && arrOfStr[rightChildIndex] != nullStr {
@@ -68,7 +68,7 @@ func dfs(arrOfStr []string, index int, diff int, root *TreeNode) {
 		root.Right = &TreeNode{
 			Val: int(num),
 		}
-		dfs(arrOfStr, rightChildIndex, diff+2, root.Right)
+		dfs(arrOfStr, rightChildIndex, rightChildIndex+1, root.Right)
 	}
 }
 
