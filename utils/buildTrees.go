@@ -15,6 +15,79 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+func BuildTreeFromStringArrayForLoop(strArr string) *TreeNode {
+	withoutBlackets := strings.Trim(strArr, "[]")
+	arrOfStr := strings.Split(withoutBlackets, ",")
+	arrLen := len(arrOfStr)
+
+	indexMap := make(map[int][]int)
+
+	diff := 0
+	for currIndex, str := range arrOfStr {
+		if str != nullStr {
+			diff++
+			leftChildIndex := currIndex + diff
+			rightChildIndex := currIndex + diff + 1
+			if leftChildIndex <= arrLen && rightChildIndex <= arrLen {
+				indexMap[currIndex] = append(indexMap[currIndex], currIndex+diff)
+				indexMap[currIndex] = append(indexMap[currIndex], currIndex+diff+1)
+			}
+		} else {
+			diff--
+		}
+	}
+
+	root := new(TreeNode)
+
+	if len(arrOfStr) > 0 && arrOfStr[0] != nullStr {
+		num, err := strconv.ParseInt(arrOfStr[0], 10, 0)
+		if err != nil {
+			log.Fatalf("the first element %v is not a number", arrOfStr[0])
+		}
+		root.Val = int(num)
+		dfsForLoop(root, 0, arrOfStr, indexMap)
+	}
+
+	printPreOrder(root)
+	fmt.Println()
+	printPostOrder(root)
+	fmt.Println()
+	printInOrder(root)
+
+	return root
+}
+
+func dfsForLoop(root *TreeNode, index int, arrOfStr []string, indexMap map[int][]int) {
+	if index >= len(arrOfStr) || root == nil {
+		return
+	}
+
+	if _, ok := indexMap[index]; ok && len(indexMap[index]) > 0 {
+
+		if indexMap[index][0] < len(arrOfStr) && arrOfStr[indexMap[index][0]] != nullStr {
+			leftVal, _ := strconv.ParseInt(arrOfStr[indexMap[index][0]], 10, 0)
+			root.Left = &TreeNode{
+				Val: int(leftVal),
+			}
+		}
+
+		if indexMap[index][1] < len(arrOfStr) && arrOfStr[indexMap[index][1]] != nullStr {
+			rightVal, _ := strconv.ParseInt(arrOfStr[indexMap[index][1]], 10, 0)
+			root.Right = &TreeNode{
+				Val: int(rightVal),
+			}
+		}
+
+		dfsForLoop(root.Left, indexMap[index][0], arrOfStr, indexMap)
+		dfsForLoop(root.Right, indexMap[index][1], arrOfStr, indexMap)
+	}
+}
+
+/*
+	 this method has a bug for this case [5,4,8,11,null,13,4,7,2,null,null,null,1]
+		which it expects all positions in all level need to be fill out with null string for nil nodes
+		but leetcode don't add extra nulls under a null node
+*/
 func BuildTreeFromStringArray(strArr string) *TreeNode {
 	withoutBlackets := strings.Trim(strArr, "[]")
 	arrOfStr := strings.Split(withoutBlackets, ",")
