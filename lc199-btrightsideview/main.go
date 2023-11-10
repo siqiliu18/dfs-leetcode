@@ -9,7 +9,7 @@ import (
 
 func main() {
 	input := "[1,2,3,4]"
-	root := utils.BuildTreeFromStringArray(input)
+	root := utils.BuildTreeFromStringArrayForLoop(input)
 	res := dfs.RightSideView(root)
 	fmt.Println(res)
 }

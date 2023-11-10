@@ -9,7 +9,7 @@ import (
 
 func TestFound(t *testing.T) {
 	input := "[3,5,1,6,2,0,8,null,null,7,4]"
-	root := utils.BuildTreeFromStringArray(input)
+	root := utils.BuildTreeFromStringArrayForLoop(input)
 	Convey("1", t, func() {
 		p := utils.TreeNode{
 			Val: 0,
@@ -29,7 +29,7 @@ func TestFound(t *testing.T) {
 func TestRightSideView1(t *testing.T) {
 	Convey("1", t, func() {
 		input := "[3,5,1,6,2,0,8,null,null,7,4]"
-		root := utils.BuildTreeFromStringArray(input)
+		root := utils.BuildTreeFromStringArrayForLoop(input)
 		p := utils.TreeNode{
 			Val: 0,
 		}
@@ -44,7 +44,7 @@ func TestRightSideView1(t *testing.T) {
 func TestRightSideView2(t *testing.T) {
 	Convey("2", t, func() {
 		input := "[3,5,1,6,2,0,8,null,null,7,4]"
-		root := utils.BuildTreeFromStringArray(input)
+		root := utils.BuildTreeFromStringArrayForLoop(input)
 		p := utils.TreeNode{
 			Val: 4,
 		}
@@ -59,7 +59,7 @@ func TestRightSideView2(t *testing.T) {
 func TestRightSideView3(t *testing.T) {
 	Convey("3", t, func() {
 		input := "[3,5,1,6,2,0,8,null,null,7,4]"
-		root := utils.BuildTreeFromStringArray(input)
+		root := utils.BuildTreeFromStringArrayForLoop(input)
 		p := utils.TreeNode{
 			Val: 5,
 		}
@@ -74,7 +74,7 @@ func TestRightSideView3(t *testing.T) {
 func TestRightSideView4(t *testing.T) {
 	Convey("4", t, func() {
 		input := "[1,2]"
-		root := utils.BuildTreeFromStringArray(input)
+		root := utils.BuildTreeFromStringArrayForLoop(input)
 		p := utils.TreeNode{
 			Val: 1,
 		}
@@ -89,7 +89,7 @@ func TestRightSideView4(t *testing.T) {
 func TestLowestCommonAncestor2(t *testing.T) {
 	Convey("1", t, func() {
 		input := "[3,5,1,6,2,0,8,null,null,7,4]"
-		root := utils.BuildTreeFromStringArray(input)
+		root := utils.BuildTreeFromStringArrayForLoop(input)
 		p := utils.TreeNode{
 			Val: 6,
 		}
