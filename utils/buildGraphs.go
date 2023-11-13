@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+// This is related to leetcode problem 133 https://leetcode.com/problems/clone-graph/submissions/547251836/
+
 type GraphNode struct {
 	Val       int
 	Neighbors []*GraphNode
