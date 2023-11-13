@@ -120,3 +120,83 @@ func dfsGraphs(currVal int, indexMap map[int][]int, nodeMap map[int]*GraphNode, 
 		}
 	}
 }
+
+/* This is more clear
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> neighbors;
+    Node() {
+        val = 0;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val) {
+        val = _val;
+        neighbors = vector<Node*>();
+    }
+    Node(int _val, vector<Node*> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+};
+
+class Solution {
+	public:
+		Node* cloneGraph(Node* node) {
+			if (!node) {
+				return NULL;
+			}
+			if (copies.find(node) == copies.end()) {
+				copies[node] = new Node(node -> val, {});
+				for (Node* neighbor : node -> neighbors) {
+					copies[node] -> neighbors.push_back(cloneGraph(neighbor));
+				}
+			}
+			return copies[node];
+		}
+	private:
+		unordered_map<Node*, Node*> copies;
+	};
+*/
+
+var NodeMap map[int]*GraphNode
+
+func BuildGraphBackTrack(tableStr string) *GraphNode {
+	// [[2,4],[1,3],[2,4],[1,3]]
+	tableRows := strings.Split(tableStr, "],[")
+	treeTableRowLen := len(tableRows)
+	treeTable := make([][]int, treeTableRowLen)
+	for row, str := range tableRows {
+		withoutBlackets := strings.Trim(str, "[]")
+		rowArr := strings.Split(withoutBlackets, ",")
+		for _, numStr := range rowArr {
+			num, err := strconv.ParseInt(numStr, 10, 0)
+			if err != nil {
+				log.Fatalf("the first element %v is not a number", numStr)
+			}
+			treeTable[row] = append(treeTable[row], int(num))
+		}
+	}
+
+	indexMap := make(map[int][]int)
+	for i := 0; i < len(treeTable); i++ {
+		indexMap[i+1] = treeTable[i]
+	}
+
+	NodeMap = make(map[int]*GraphNode)
+
+	return dfsBackTrack(1, indexMap)
+}
+
+func dfsBackTrack(currVal int, indexMap map[int][]int) *GraphNode {
+	if _, ok := NodeMap[currVal]; !ok {
+		NodeMap[currVal] = &GraphNode{
+			Val: currVal,
+		}
+		for _, neighborNum := range indexMap[currVal] {
+			NodeMap[currVal].Neighbors = append(NodeMap[currVal].Neighbors, dfsBackTrack(neighborNum, indexMap))
+		}
+	}
+	return NodeMap[currVal]
+}
