@@ -96,3 +96,21 @@ func TestMaxPathSum5(t *testing.T) {
 		So(res, ShouldEqual, 48)
 	})
 }
+
+func TestMaxPathSum11(t *testing.T) {
+	input := "[-1,-2,10,-6,null,-3,-6]"
+	root := utils.BuildTreeFromStringArrayForLoop(input)
+	Convey("11", t, func() {
+		res := MaxpathSumIdea(root)
+		So(res, ShouldEqual, 10)
+	})
+}
+
+func TestMaxPathSum12(t *testing.T) {
+	input := "[5,4,8,11,null,13,4,7,2,null,null,null,1]"
+	root := utils.BuildTreeFromStringArrayForLoop(input)
+	Convey("12", t, func() {
+		res := MaxpathSumIdea(root)
+		So(res, ShouldEqual, 48)
+	})
+}

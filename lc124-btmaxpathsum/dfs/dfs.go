@@ -66,3 +66,24 @@ func findMax(rootVal, leftVal, rightVal, bothPathVal, rootLeftVal, rootRightVal,
 	}
 	return maxVal
 }
+
+func MaxpathSumIdea(root *utils.TreeNode) int {
+	res := 0
+
+	dfsIdea(root, &res)
+
+	return res
+}
+
+func dfsIdea(root *utils.TreeNode, res *int) int {
+	if root == nil {
+		return 0
+	}
+
+	leftSum := findMaxOfTwo(dfsIdea(root.Left, res), 0)   // handles the root value is negative case
+	rightSum := findMaxOfTwo(dfsIdea(root.Right, res), 0) // handles the root value is negative case
+
+	*res = findMaxOfTwo(*res, leftSum+rightSum+root.Val)
+
+	return findMaxOfTwo(leftSum, rightSum) + root.Val
+}
