@@ -1,7 +1,5 @@
 package lc269aliendict
 
-import "fmt"
-
 /* https://www.youtube.com/watch?v=ZU7fiX0WCCY
 Input: words = ["wrt","wrf","er","ett","rftt"]
 Output: "wertf"
@@ -19,92 +17,82 @@ w - e - r - t - f
 
 func AlienOrder(words []string) string {
 
-	child := make(map[string]map[string]bool)
-	pare := make(map[string]map[string]bool)
+	// similar to other languages we want to create a map of string to set here
+	// but since Go doesn't have set, we create a map of string to map of bool(doesn't matter) instead
 
+	// collect child nodes of an existing node based on giving input
+	nodeChildren := make(map[string]map[string]bool)
+
+	// collect parent nodes of an existing node based on giving input
+	nodeParents := make(map[string]map[string]bool)
+
+	// init child 'set' and parent 'set' of each node
 	for _, word := range words {
 		for _, char := range word {
-			child[string(char)] = make(map[string]bool)
-			pare[string(char)] = make(map[string]bool)
+			nodeChildren[string(char)] = make(map[string]bool)
+			nodeParents[string(char)] = make(map[string]bool)
 		}
 	}
 
+	// loop through word list
 	for i := 0; i < len(words)-1; i++ {
 		w1 := words[i]
 		w2 := words[i+1]
 
+		// ex: word1 = abc, word2 = ab, this claim is not following the sorted lexicographically rule
 		if len(w1) > len(w2) && w1[:len(w2)] == w2 {
 			return ""
 		}
 
-		// fmt.Println(w1)
-		// fmt.Println(w2)
-
+		// comparing chars between two words
 		for j := 0; j < len(w1); j++ {
+			// if not the same, then w2 char is the child or w1 char
 			if w1[j] != w2[j] {
-				// child[[]string(w1)[j]] = append(child[[]string(w1)[j]], []string(w2)[j])
-				// pare[[]string(w2)[j]] = append(pare[[]string(w2)[j]], []string(w1)[j])
-
-				// fmt.Println(string(w1[j]))
-				// fmt.Println(string(w2[j]))
-
-				child[string(w1[j])][string(w2[j])] = true
-				pare[string(w2[j])][string(w1[j])] = true
+				nodeChildren[string(w1[j])][string(w2[j])] = true
+				nodeParents[string(w2[j])][string(w1[j])] = true
 				break
 			}
 		}
 	}
 
-	// for c, cs := range pare {
-	// 	fmt.Printf("parent = %v, chilren = ", c)
-	// 	for _, p := range cs {
-	// 		fmt.Printf(" %v,", string(p))
-	// 	}
-	// 	fmt.Println()
-	// }
-
-	// fmt.Println("----------")
-
-	// for c, cs := range child {
-	// 	fmt.Printf("child = %v, parents = ", c)
-	// 	for _, p := range cs {
-	// 		fmt.Printf(" %v,", string(p))
-	// 	}
-	// 	fmt.Println()
-	// }
-
+	// create a array of string for appending only?
 	res := []string{}
+
+	// topological sort is bfs?
 	queue := []string{}
 
+	// extract nodes that have no parents
 	no_par_node := []string{}
-	for node, cs := range pare {
-		// fmt.Println(string(node))
+	for node, cs := range nodeParents {
 		if len(cs) == 0 {
 			no_par_node = append(no_par_node, node)
 		}
 	}
 
-	fmt.Println(no_par_node)
-
+	// delete them from map and add them to queue to trigger the topological sort
 	for _, node := range no_par_node {
-		delete(pare, node)
+		delete(nodeParents, node)
 		queue = append(queue, node)
 	}
 
+	// if queue isn't empty
 	for len(queue) != 0 {
-		node := queue[0]
-		queue = queue[1:]
-		res = append(res, node)
-		for ch := range child[node] {
-			delete(pare[ch], node)
-			if len(pare[ch]) == 0 {
-				queue = append(queue, ch)
-				delete(pare, ch)
+		node := queue[0]        // pop the first node
+		queue = queue[1:]       // remove the first node from queue
+		res = append(res, node) // add node to res arr
+
+		// loop through children of the popped node
+		for ch := range nodeChildren[node] {
+			delete(nodeParents[ch], node)  // delete node from current child's parent list
+			if len(nodeParents[ch]) == 0 { // if current child has no parent anymore
+				queue = append(queue, ch) // add current child to queue
+				delete(nodeParents, ch)   // delete current child from parent map
 			}
 		}
 	}
 
-	if len(pare) != 0 {
+	// if the map for storing parents of a node isn't empty, meaning there was invalid relationship
+	if len(nodeParents) != 0 {
 		return ""
 	}
 	str := ""
