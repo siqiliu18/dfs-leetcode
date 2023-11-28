@@ -15,7 +15,7 @@ e -> r
 w - e - r - t - f
 */
 
-func AlienOrder(words []string) string {
+func AlienOrderBFS(words []string) string {
 
 	// similar to other languages we want to create a map of string to set here
 	// but since Go doesn't have set, we create a map of string to map of bool(doesn't matter) instead

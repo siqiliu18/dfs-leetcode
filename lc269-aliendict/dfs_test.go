@@ -9,7 +9,7 @@ import (
 func TestExist1(t *testing.T) {
 	Convey("1", t, func() {
 		words := []string{"wrt", "wrf", "er", "ett", "rftt"}
-		res := AlienOrder(words)
+		res := AlienOrderBFS(words)
 		So(res, ShouldEqual, "wertf")
 	})
 }
