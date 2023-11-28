@@ -15,6 +15,8 @@ e -> r
 w - e - r - t - f
 */
 
+// This logic uses BFS, by starting with no parent nodes and put them into a queue
+// loop through children and if they don't have any more parents (removed), add it to the queue
 func AlienOrderBFS(words []string) string {
 
 	// similar to other languages we want to create a map of string to set here
