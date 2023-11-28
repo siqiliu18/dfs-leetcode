@@ -56,7 +56,7 @@ func AlienOrder(words []string) string {
 	}
 
 	// create a array of string for appending only?
-	res := []string{}
+	res := ""
 
 	// topological sort is bfs?
 	queue := []string{}
@@ -77,9 +77,9 @@ func AlienOrder(words []string) string {
 
 	// if queue isn't empty
 	for len(queue) != 0 {
-		node := queue[0]        // pop the first node
-		queue = queue[1:]       // remove the first node from queue
-		res = append(res, node) // add node to res arr
+		node := queue[0]  // pop the first node
+		queue = queue[1:] // remove the first node from queue
+		res += node       // add node to res arr
 
 		// loop through children of the popped node
 		for ch := range nodeChildren[node] {
@@ -95,9 +95,6 @@ func AlienOrder(words []string) string {
 	if len(nodeParents) != 0 {
 		return ""
 	}
-	str := ""
-	for _, s := range res {
-		str += s
-	}
-	return str
+
+	return res
 }
