@@ -61,3 +61,11 @@ func TestExistDFS5(t *testing.T) {
 		So(res, ShouldEqual, "acb")
 	})
 }
+
+func TestExistDFS6(t *testing.T) {
+	Convey("6", t, func() {
+		words := []string{"z", "x", "a", "zb", "zx"}
+		res := AlienOrderPostOrderDFS(words)
+		So(res, ShouldEqual, "acb")
+	})
+}

@@ -120,6 +120,8 @@ func AlienOrderPostOrderDFS(words []string) string {
 		}
 	}
 
+	visited := make(map[string]bool)
+
 	// loop through word list
 	for i := 0; i < len(words)-1; i++ {
 		w1 := words[i]
@@ -134,6 +136,8 @@ func AlienOrderPostOrderDFS(words []string) string {
 		for j := 0; j < len(w1); j++ {
 			// if not the same, then w2 char is the child or w1 char
 			if w1[j] != w2[j] {
+				visited[string(w1[j])] = false
+				visited[string(w2[j])] = false
 				nodeChildren[string(w1[j])][string(w2[j])] = true
 				nodeParents[string(w2[j])][string(w1[j])] = true
 				break
@@ -157,6 +161,8 @@ func AlienOrderPostOrderDFS(words []string) string {
 		return ""
 	}
 
+	// visited["0"] = true
+
 	// if queue isn't empty
 	for len(stack) != 0 {
 		node := stack[len(stack)-1] // pop the last node
@@ -167,12 +173,14 @@ func AlienOrderPostOrderDFS(words []string) string {
 
 		for ch := range nodeChildren[node] {
 			if len(nodeChildren[ch]) == 0 {
-				res += ch // missing the begging node
+				if !visited[ch] {
+					res += ch // missing the begging node
+				}
 				delete(nodeParents[ch], node)
 				delete(nodeChildren[node], ch) // most important
 				delete(nodeChildren, ch)
 				delete(nodeParents, ch)
-				// stack = stack[:len(stack)-1]
+				visited[ch] = true
 			} else {
 				stack = append(stack, ch)
 			}
