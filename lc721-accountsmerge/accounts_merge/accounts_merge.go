@@ -1,10 +1,27 @@
 package accountsmerge
 
 import (
-	"fmt"
 	"sort"
 )
 
+/*
+Doesn't work for case where same emails happened after
+
+	accounts := [][]string{
+		{"John", "johnsmith@mail.com", "john_newyork@mail.com"},
+		{"John", "johnsmith@mail.com", "john00@mail.com"},
+		{"Mary", "mary@mail.com"},
+		{"John", "johnnybravo@mail.com"},
+		{"John", "john00@mail.com", "johnnybravo@mail.com"},
+	}
+
+Expected:
+
+	[
+		["Mary","mary@mail.com"],
+		["John","john00@mail.com","john_newyork@mail.com","johnnybravo@mail.com","johnsmith@mail.com"]
+	]
+*/
 func AccountsMerge(accounts [][]string) [][]string {
 	res := [][]string{}
 
@@ -13,7 +30,7 @@ func AccountsMerge(accounts [][]string) [][]string {
 	for _, account := range accounts {
 		name := account[0]
 		emails := account[1:]
-		fmt.Printf("name = %v, emails = %v", name, emails)
+		// fmt.Printf("name = %v, emails = %v", name, emails)
 		if _, ok := acMap[name]; !ok { // name not found
 			acMap[name] = make(map[string]byte) // init inner map (set)
 			for _, email := range emails {
@@ -24,6 +41,7 @@ func AccountsMerge(accounts [][]string) [][]string {
 			for _, email := range emails {
 				if _, ok := acMap[name][email]; ok {
 					sameAcc = true
+					delete(acMap[name], email)
 				}
 			}
 			if sameAcc { // found same email
