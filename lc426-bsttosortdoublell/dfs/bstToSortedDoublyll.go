@@ -11,7 +11,6 @@ var Curr = Head.Right // nil
 func TreeToDoublyList(root *utils.TreeNode) *utils.TreeNode {
 	head := utils.TreeNode{}
 	pre := &head
-	curr := head.Right // nil
 
 	var dfs func(*utils.TreeNode)
 	dfs = func(node *utils.TreeNode) {
@@ -19,13 +18,9 @@ func TreeToDoublyList(root *utils.TreeNode) *utils.TreeNode {
 			return
 		}
 		dfs(node.Left)
-		curr = &utils.TreeNode{
-			Val:  node.Val,
-			Left: pre,
-		}
-		pre.Right = curr
-		pre = curr
-		curr = curr.Right
+		pre.Right = node
+		node.Left = pre
+		pre = pre.Right
 		dfs(node.Right)
 	}
 
