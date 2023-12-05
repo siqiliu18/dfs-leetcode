@@ -48,11 +48,15 @@ func BuildTreeFromStringArrayForLoop(strArr string) *TreeNode {
 		dfsForLoop(root, 0, arrOfStr, indexMap)
 	}
 
+	fmt.Printf("PreOrder: ")
 	printPreOrder(root)
 	fmt.Println()
+	fmt.Printf("PostOrder: ")
 	printPostOrder(root)
 	fmt.Println()
+	fmt.Printf("InOrder: ")
 	printInOrder(root)
+	fmt.Println()
 
 	return root
 }
@@ -105,11 +109,15 @@ func BuildTreeFromStringArray(strArr string) *TreeNode {
 		dfs(arrOfStr, 0, 1, root)
 	}
 
+	fmt.Printf("PreOrder: ")
 	printPreOrder(root)
 	fmt.Println()
+	fmt.Printf("PostOrder: ")
 	printPostOrder(root)
 	fmt.Println()
+	fmt.Printf("InOrder: ")
 	printInOrder(root)
+	fmt.Println()
 
 	return root
 }
