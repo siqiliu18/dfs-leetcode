@@ -27,7 +27,10 @@ func ShortestDistance(grid [][]int) int {
 	}
 
 	for i, oneCoordi := range ones {
-		bfs(oneCoordi, grid, grid2, height, wide, (i+1)*-1)
+		move := bfs(oneCoordi, grid, grid2, height, wide, (i+1)*-1)
+		if !move {
+			return -1
+		}
 	}
 
 	min := math.MaxInt
@@ -41,29 +44,28 @@ func ShortestDistance(grid [][]int) int {
 		}
 	}
 
-	if min == math.MaxInt || min == 0 {
-		return -1
-	}
-
 	return min
 }
 
-func bfs(oneCoordi Coordi, grid, grid2 [][]int, height, wide, path int) {
+func bfs(oneCoordi Coordi, grid, grid2 [][]int, height, wide, round int) bool {
 	fourD := [][]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
 	queue := []Coordi{oneCoordi}
 
+	move := false // check if any move
 	for len(queue) != 0 {
 		currCoor := queue[0]
 		queue = queue[1:]
 
 		for _, di := range fourD {
 			if currCoor.x+di[0] >= 0 && currCoor.x+di[0] < height && currCoor.y+di[1] >= 0 && currCoor.y+di[1] < wide && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 2 {
-				if grid[currCoor.x+di[0]][currCoor.y+di[1]] != path && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 1 && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 2 {
+				if grid[currCoor.x+di[0]][currCoor.y+di[1]] != round && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 1 && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 2 {
 					grid2[currCoor.x+di[0]][currCoor.y+di[1]] = currCoor.val + grid2[currCoor.x+di[0]][currCoor.y+di[1]]
-					grid[currCoor.x+di[0]][currCoor.y+di[1]] = path
+					grid[currCoor.x+di[0]][currCoor.y+di[1]] = round
 					queue = append(queue, Coordi{currCoor.x + di[0], currCoor.y + di[1], currCoor.val + 1})
+					move = true
 				}
 			}
 		}
 	}
+	return move
 }

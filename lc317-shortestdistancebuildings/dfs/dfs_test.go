@@ -87,13 +87,35 @@ func TestShortestDistance8(t *testing.T) {
 }
 
 /*
-1. if grid val is 1, assign grid2 with val 1 as well
-2. in bfs, don't avoid 1, calculate its sum in grid2
-3. if grid2 1 position val is still 1, meaning it is blocked, return 1
+add a move var to check if any move from a 1, if not, return -1 at the end
 */
 func TestShortestDistance9(t *testing.T) {
 	Convey("1", t, func() {
 		input := [][]int{{0, 2, 1}, {1, 0, 2}, {0, 1, 0}}
+		res := ShortestDistance(input)
+		So(res, ShouldEqual, -1)
+	})
+}
+
+func TestShortestDistance10(t *testing.T) {
+	Convey("1", t, func() {
+		input := [][]int{{1, 0, 1, 0, 1}}
+		res := ShortestDistance(input)
+		So(res, ShouldEqual, -1)
+	})
+}
+
+func TestShortestDistance11(t *testing.T) {
+	Convey("1", t, func() {
+		input := [][]int{
+			{1, 1, 1, 1, 1, 0},
+			{0, 0, 0, 0, 0, 1},
+			{0, 1, 1, 0, 0, 1},
+			{1, 0, 0, 1, 0, 1},
+			{1, 0, 1, 0, 0, 1},
+			{1, 0, 0, 0, 0, 1},
+			{0, 1, 1, 1, 1, 0},
+		}
 		res := ShortestDistance(input)
 		So(res, ShouldEqual, -1)
 	})
