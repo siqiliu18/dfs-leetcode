@@ -91,7 +91,24 @@ add a move var to check if any move from a 1, if not, return -1 at the end
 */
 func TestShortestDistance9(t *testing.T) {
 	Convey("1", t, func() {
-		input := [][]int{{0, 2, 1}, {1, 0, 2}, {0, 1, 0}}
+		input := [][]int{
+			{0, 2, 1},
+			{1, 0, 2},
+			{0, 1, 0},
+		}
+		res := ShortestDistance(input)
+		So(res, ShouldEqual, -1)
+	})
+}
+
+func TestShortestDistance91(t *testing.T) {
+	Convey("1", t, func() {
+		input := [][]int{
+			{0, 2, 0, 1},
+			{0, 0, 2, 0},
+			{1, 0, 0, 2},
+			{0, 1, 0, 0},
+		}
 		res := ShortestDistance(input)
 		So(res, ShouldEqual, -1)
 	})
@@ -117,6 +134,6 @@ func TestShortestDistance11(t *testing.T) {
 			{0, 1, 1, 1, 1, 0},
 		}
 		res := ShortestDistance(input)
-		So(res, ShouldEqual, -1)
+		So(res, ShouldEqual, 88)
 	})
 }
