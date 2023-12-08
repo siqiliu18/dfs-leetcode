@@ -10,7 +10,7 @@ type Coordi struct {
 	val int
 }
 
-func ShortestDistance0(grid [][]int) int {
+func ShortestDistance(grid [][]int) int {
 	rows := len(grid)
 	cols := len(grid[0])
 
@@ -28,57 +28,60 @@ func ShortestDistance0(grid [][]int) int {
 		}
 	}
 
+	res := math.MaxInt
 	round := 0
 	for i, oneCoordi := range ones {
-		round = (i + 1) * -1
-		move := bfs(oneCoordi, grid, grid2, rows, cols, round)
-		if !move {
-			return -1
-		}
+		round = i * -1
+		// res = bfs(oneCoordi, grid, grid2, rows, cols, round)
+		bfs(oneCoordi, grid, grid2, rows, cols, round)
 	}
 
-	min := math.MaxInt
+	// if res = bfs(oneCoordi, grid, grid2, rows, cols, round) above, no need to do this step
 	for x := 0; x < rows; x++ {
 		for y := 0; y < cols; y++ {
-			if grid[x][y] != 1 && grid[x][y] != 2 {
-				if grid[x][y] != round {
-					return -1
-				}
-				if grid2[x][y] < min {
-					min = grid2[x][y]
+			if grid[x][y] != 1 && grid[x][y] != 2 && grid[x][y] == round-1 {
+				if grid2[x][y] < res {
+					res = grid2[x][y]
 				}
 			}
 		}
 	}
 
-	return min
+	if res == math.MaxInt {
+		return -1
+	}
+
+	return res
 }
 
-func bfs(oneCoordi Coordi, grid, grid2 [][]int, rows, cols, round int) bool {
+// currSum: as starting over more 1s, the values in grid2 will increase
+// currSum stores the sum of steps to increasing 1s
+func bfs(oneCoordi Coordi, grid, grid2 [][]int, rows, cols, round int) int {
 	fourD := [][]int{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}
 	queue := []Coordi{oneCoordi}
 
-	move := false // check if any move
+	currSum := math.MaxInt
 	for len(queue) != 0 {
 		currCoor := queue[0]
 		queue = queue[1:]
 
 		for _, di := range fourD {
-			if currCoor.x+di[0] >= 0 && currCoor.x+di[0] < rows && currCoor.y+di[1] >= 0 && currCoor.y+di[1] < cols && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 2 {
-				if grid[currCoor.x+di[0]][currCoor.y+di[1]] != round && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 1 && grid[currCoor.x+di[0]][currCoor.y+di[1]] != 2 {
+			if currCoor.x+di[0] >= 0 && currCoor.x+di[0] < rows && currCoor.y+di[1] >= 0 && currCoor.y+di[1] < cols {
+				// cannot use grid[currCoor.x+di[0]][currCoor.y+di[1]] != round here because != will visit all empty lands even two buildings are blocked and unreachable from each other
+				if grid[currCoor.x+di[0]][currCoor.y+di[1]] == round {
 					grid2[currCoor.x+di[0]][currCoor.y+di[1]] = currCoor.val + grid2[currCoor.x+di[0]][currCoor.y+di[1]]
-					grid[currCoor.x+di[0]][currCoor.y+di[1]] = round
+					grid[currCoor.x+di[0]][currCoor.y+di[1]] -= 1
 					queue = append(queue, Coordi{currCoor.x + di[0], currCoor.y + di[1], currCoor.val + 1})
-					move = true
+					currSum = min(currSum, grid2[currCoor.x+di[0]][currCoor.y+di[1]])
 				}
 			}
 		}
 	}
-	return move
+	return currSum
 }
 
 // hint and code from https://www.youtube.com/watch?v=yjHXS2w_IvY
-func ShortestDistance(grid [][]int) int {
+func ShortestDistance1(grid [][]int) int {
 	rows := len(grid)
 	cols := len(grid[0])
 
