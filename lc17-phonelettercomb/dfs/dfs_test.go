@@ -13,3 +13,12 @@ func TestLetterCombinations(t *testing.T) {
 		So(res, ShouldResemble, exp)
 	})
 }
+
+func TestPermute(t *testing.T) {
+	Convey("1", t, func() {
+		input := []int{1, 2, 3}
+		res := Permute(input)
+		exp := [][]int{{1, 2, 3}, {1, 3, 2}, {2, 1, 3}, {2, 3, 1}, {3, 1, 2}, {3, 2, 1}}
+		So(res, ShouldResemble, exp)
+	})
+}

@@ -34,3 +34,28 @@ func combRec(digits *string, index int, combStr []byte, outVec *[]string) {
 		combRec(digits, index+1, combStr, outVec)
 	}
 }
+
+func Permute(nums []int) [][]int {
+	res := new([][]int)
+	combArr := []int{}
+	visited := make([]bool, len(nums))
+	permRec(nums, combArr, visited, res)
+	return *res
+}
+
+func permRec(nums []int, combArr []int, visited []bool, res *[][]int) {
+	if len(combArr) == len(nums) {
+		*res = append(*res, combArr)
+		return
+	}
+	for i := 0; i < len(nums); i++ {
+		if visited[i] {
+			continue
+		}
+		visited[i] = true
+		combArr = append(combArr, nums[i])
+		permRec(nums, combArr, visited, res)
+		combArr = combArr[:len(combArr)-1]
+		visited[i] = false
+	}
+}
