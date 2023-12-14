@@ -1,5 +1,24 @@
 package dfs
 
+/*
+	Leetcode problem 17:
+
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+
+A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+
+Example 1:
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+Example 2:
+Input: digits = ""
+Output: []
+
+Example 3:
+Input: digits = "2"
+Output: ["a","b","c"]
+*/
 var dMap map[byte]string = map[byte]string{
 	byte('1'): "",
 	byte('2'): "abc",
@@ -35,6 +54,19 @@ func combRec(digits *string, index int, combStr []byte, outVec *[]string) {
 	}
 }
 
+/*
+46. Permutations
+
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+Example 1:
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+
+Example 2:
+Input: nums = [0,1]
+Output: [[0,1],[1,0]]
+*/
 func Permute(nums []int) [][]int {
 	res := new([][]int)
 	combArr := []int{}
