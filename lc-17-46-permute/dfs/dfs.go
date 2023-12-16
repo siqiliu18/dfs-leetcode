@@ -149,7 +149,7 @@ func backtracking(nums []int, o *[][]int, cur []int, curHash map[int]bool) {
 		}
 		curHash[nums[i]] = true
 		// add the next nums[i] value to current list
-		cur := append(cur, nums[i])
+		cur := append(cur, nums[i]) // !!!!!! := !!!!!!!!!!!!
 		// recursively call function
 		backtracking(nums, o, cur, curHash)
 		// remove last item from cur
@@ -157,3 +157,26 @@ func backtracking(nums []int, o *[][]int, cur []int, curHash map[int]bool) {
 		cur = cur[:len(cur)-1]
 	}
 }
+
+/* ex
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	cur := []int{1,2}
+	fmt.Println(cur)
+	for i := 3; i < 6; i++ {
+    	cur := append(cur, i) //// !!!! it is OK to do it inside a for loop block,
+    	fmt.Println(cur)
+  	}
+}
+
+output:
+[1 2]
+[1 2 3]
+[1 2 4]
+[1 2 5]
+*/
