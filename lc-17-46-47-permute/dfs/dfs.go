@@ -180,3 +180,74 @@ output:
 [1 2 4]
 [1 2 5]
 */
+
+/*
+	Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+
+Input: nums = [1,1,2]
+Output:
+[[1,1,2],
+
+	[1,2,1],
+	[2,1,1]]
+
+C++ code, use a set to check dups
+class Solution {
+public:
+
+	    vector<vector<int>> permuteUnique(vector<int>& nums) {
+	        vector<vector<int>> res;
+	        vector<int> pvec;
+	        vector<bool> visited (nums.size(), false);
+	        // backtrackVisited(res, pvec, nums, visited);
+	        // backtrackSwap(res, nums, 0);
+	        backtrackVisitedWithDuplicatedNums(res, pvec, nums, visited);
+	        return res;
+	    }
+
+	    void backtrackVisitedWithDuplicatedNums(vector<vector<int>>& res, vector<int>& pvec, vector<int>& nums, vector<bool>& visited) {
+	        // base case
+	        if (pvec.size() == nums.size()) {
+	            res.push_back(pvec);
+	            return;
+	        }
+
+	        set<int> checkDup;
+	        for (int i = 0; i < nums.size(); ++i) {
+	            if (visited[i] || checkDup.count(nums[i])) continue;
+	            checkDup.insert(nums[i]);
+	            visited[i] = true;
+	            pvec.push_back(nums[i]);
+	            backtrackVisitedWithDuplicatedNums(res, pvec, nums, visited);
+	            pvec.pop_back();
+	            visited[i] = false;
+	        }
+	    }
+	};
+*/
+func PermuteUnique(nums []int) [][]int {
+	res := new([][]int)
+	combArr := []int{}
+	visited := make([]bool, len(nums))
+	PermuteUniqueRecur(nums, combArr, res, visited)
+	return *res
+}
+
+func PermuteUniqueRecur(nums []int, combArr []int, res *[][]int, visited []bool) {
+	if len(combArr) == len(nums) {
+		*res = append(*res, append([]int{}, combArr...))
+		return
+	}
+	checkDup := make(map[int]int)
+	for i, num := range nums {
+		if _, ok := checkDup[num]; ok || visited[i] {
+			continue
+		}
+		checkDup[num] = 0
+		visited[i] = true
+		combArr = append(combArr, num)
+		PermuteUniqueRecur(nums, combArr, res, visited)
+		combArr = combArr[:len(combArr)-1]
+		visited[i] = false
+	}
+}

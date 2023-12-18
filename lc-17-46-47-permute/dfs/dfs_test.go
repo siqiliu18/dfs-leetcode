@@ -40,3 +40,12 @@ func TestPermute2(t *testing.T) {
 		So(res, ShouldResemble, exp)
 	})
 }
+
+func TestPermute3(t *testing.T) {
+	Convey("1", t, func() {
+		input := []int{1, 1, 2}
+		res := PermuteUnique(input)
+		exp := [][]int{{1, 1, 2}, {1, 2, 1}, {2, 1, 1}}
+		So(res, ShouldResemble, exp)
+	})
+}
