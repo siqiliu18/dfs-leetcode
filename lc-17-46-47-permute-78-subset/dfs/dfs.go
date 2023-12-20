@@ -293,11 +293,13 @@ func subsets(nums []int) [][]int {
 
 func subsetsRecur(nums []int, count int, curArr []int, res *[][]int, start int) {
 	if len(curArr) == count {
+		subsetCopy := make([]int, len(curArr))
+		copy(subsetCopy, curArr)
 		*res = append(*res, curArr)
 		return
 	}
 	for i := start; i < len(nums); i++ {
-		curArr := append(curArr, nums[i])
+		curArr = append(curArr, nums[i])
 		subsetsRecur(nums, count, curArr, res, i+1)
 		curArr = curArr[:len(curArr)-1]
 	}
