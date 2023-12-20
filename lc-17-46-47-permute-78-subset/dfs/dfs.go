@@ -103,6 +103,14 @@ func permRec(nums []int, combArr []int, visited []bool, res *[][]int) {
 	}
 }
 
+func permute(nums []int) [][]int {
+	res := new([][]int)
+	combArr := []int{}
+	visited := make([]bool, len(nums))
+	permRec(nums, combArr, visited, res)
+	return *res
+}
+
 func permRec2(nums []int, combArr []int, res *[][]int) {
 	if len(combArr) == len(nums) {
 		*res = append(*res, append([]int{}, combArr...))
@@ -295,12 +303,34 @@ func subsetsRecur(nums []int, count int, curArr []int, res *[][]int, start int) 
 	}
 }
 
+// UPDATE!!!: https://www.youtube.com/watch?v=3tpjp5h3M6Y
+func subsets2(nums []int) [][]int {
+	res := [][]int{{}}
+	// for count := 1; count <= len(nums); count++ {
+	curArr := []int{}
+	subsetsRecur2(nums, curArr, &res, 0)
+	// }
+	return res
+}
+
+func subsetsRecur2(nums []int, current []int, res *[][]int, start int) {
+	subsetCopy := make([]int, len(current))
+	copy(subsetCopy, current)
+	*res = append(*res, subsetCopy)
+
+	for i := start; i < len(nums); i++ {
+		current = append(current, nums[i])
+		subsetsRecur2(nums, current, res, i+1)
+		current = current[:len(current)-1]
+	}
+}
+
 // method 2: create res = [[]]
 //   - loop through res, make a copy of each element and add current num into each
 //   - nums = [1,2,3]
 //   - make a copy : [[], []], then add 1 into the copy => [[], [1]]
 //   - make a copy [[], [1], [], [1]], add 2 into copies => [[], [1], [2], [1, 2]]
-func subsets2(nums []int) [][]int {
+func subsets3(nums []int) [][]int {
 	res := [][]int{{}}
 	resLen := len(res)
 	for _, num := range nums {
