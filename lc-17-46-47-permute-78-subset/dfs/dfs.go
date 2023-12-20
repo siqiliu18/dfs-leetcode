@@ -251,3 +251,65 @@ func PermuteUniqueRecur(nums []int, combArr []int, res *[][]int, visited []bool)
 		visited[i] = false
 	}
 }
+
+/*
+	78.Subsets
+
+Given an integer array nums of unique elements, return all possible
+subsets
+ (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+
+Example 1:
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+
+Example 2:
+Input: nums = [0]
+Output: [[],[0]]
+*/
+
+// method 1: create a count that tells how many nums will be inserted.
+//   - at the count loop, start is always from 0
+//   - at the recurrsion loop, start is 1 index to the right of current index
+func subsets(nums []int) [][]int {
+	res := [][]int{{}}
+	for count := 1; count <= len(nums); count++ {
+		curArr := []int{}
+		subsetsRecur(nums, count, curArr, &res, 0)
+	}
+	return res
+}
+
+func subsetsRecur(nums []int, count int, curArr []int, res *[][]int, start int) {
+	if len(curArr) == count {
+		*res = append(*res, curArr)
+		return
+	}
+	for i := start; i < len(nums); i++ {
+		curArr := append(curArr, nums[i])
+		subsetsRecur(nums, count, curArr, res, i+1)
+		curArr = curArr[:len(curArr)-1]
+	}
+}
+
+// method 2: create res = [[]]
+//   - loop through res, make a copy of each element and add current num into each
+//   - nums = [1,2,3]
+//   - make a copy : [[], []], then add 1 into the copy => [[], [1]]
+//   - make a copy [[], [1], [], [1]], add 2 into copies => [[], [1], [2], [1, 2]]
+func subsets2(nums []int) [][]int {
+	res := [][]int{{}}
+	resLen := len(res)
+	for _, num := range nums {
+		for i := 0; i < resLen; i++ {
+			curArr := res[i]
+			curArr = append(curArr, num)
+			res = append(res, curArr)
+		}
+		resLen = len(res)
+	}
+	return res
+}
