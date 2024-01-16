@@ -11,29 +11,40 @@ package dfs
 */
 func DFS(x int, y int, rowLen int, colLen int, grid [][]byte, visited [][]bool) {
 
-	// left
-	if y-1 >= 0 && string(grid[x][y-1]) == "1" && !visited[x][y-1] {
-		visited[x][y-1] = true
-		DFS(x, y-1, rowLen, colLen, grid, visited)
+	directs := [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+
+	for _, direct := range directs {
+		nextX := x + direct[0]
+		nextY := y + direct[1]
+		if nextX >= 0 && nextX < rowLen && nextY >= 0 && nextY < colLen && string(grid[nextX][nextY]) == "1" && !visited[nextX][nextY] {
+			visited[nextX][nextY] = true
+			DFS(nextX, nextY, rowLen, colLen, grid, visited)
+		}
 	}
 
-	// right
-	if y+1 < colLen && string(grid[x][y+1]) == "1" && !visited[x][y+1] {
-		visited[x][y+1] = true
-		DFS(x, y+1, rowLen, colLen, grid, visited)
-	}
+	// // left
+	// if y-1 >= 0 && string(grid[x][y-1]) == "1" && !visited[x][y-1] {
+	// 	visited[x][y-1] = true
+	// 	DFS(x, y-1, rowLen, colLen, grid, visited)
+	// }
 
-	// top
-	if x-1 >= 0 && string(grid[x-1][y]) == "1" && !visited[x-1][y] {
-		visited[x-1][y] = true
-		DFS(x-1, y, rowLen, colLen, grid, visited)
-	}
+	// // right
+	// if y+1 < colLen && string(grid[x][y+1]) == "1" && !visited[x][y+1] {
+	// 	visited[x][y+1] = true
+	// 	DFS(x, y+1, rowLen, colLen, grid, visited)
+	// }
 
-	// bottom
-	if x+1 < rowLen && string(grid[x+1][y]) == "1" && !visited[x+1][y] {
-		visited[x+1][y] = true
-		DFS(x+1, y, rowLen, colLen, grid, visited)
-	}
+	// // top
+	// if x-1 >= 0 && string(grid[x-1][y]) == "1" && !visited[x-1][y] {
+	// 	visited[x-1][y] = true
+	// 	DFS(x-1, y, rowLen, colLen, grid, visited)
+	// }
+
+	// // bottom
+	// if x+1 < rowLen && string(grid[x+1][y]) == "1" && !visited[x+1][y] {
+	// 	visited[x+1][y] = true
+	// 	DFS(x+1, y, rowLen, colLen, grid, visited)
+	// }
 }
 
 func NumIslands(grid [][]byte) int {
